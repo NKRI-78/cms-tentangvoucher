@@ -1,0 +1,8 @@
+<!-- <td><?= $row->picture->originalName ?></td>
+                                                <td>
+                                                    <div class="send-panel">
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url('/admin/category/edit/' . $row->_id) ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Banner"> <i class="ri-edit-line text-primary"></i></a> </label>
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DetailCategory(<?= $row->_id ?>)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Image"> <i class="ri-list-check-2 text-primary"></i></a> </label>
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url('/admin/category/delete/' . $row->_id) ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Banner"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
+                                                    </div>
+                                                </td> -->

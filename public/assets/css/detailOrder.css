@@ -1,0 +1,99 @@
+    .text {
+        color: #000;
+    }
+
+    .label {
+        font-weight: 700;
+    }
+
+    .text-product {
+        font-weight: normal !important;
+    }
+
+    .text-invoice {
+        font-weight: 900;
+        color: #3DA956;
+    }
+
+    .button-confirm {
+        background-color: #007bff !important;
+        color: white !important;
+    }
+
+    .img-product {
+        /* width: 100%;
+        height: auto;
+        max-height: 250px;
+        border-radius: 10px; */
+        width: 100px;
+        height: 100px;
+        max-height: 150px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .row>.header-detail {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .section-satu {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .text-product {
+        margin-left: 2.8rem;
+        /* margin-left: -3rem */
+    }
+
+    .image-product {
+        margin-right: -5rem;
+        border: 1px solid #000;
+        border-radius: 11px;
+    }
+
+    .col {
+        display: flex !important;
+    }
+
+    .product {
+        display: flex;
+        justify-content: space-between;
+        /* gap: 22rem; */
+        margin-bottom: 0.5rem;
+    }
+
+    .section-dua>.text-total-harga {
+        font-weight: 800 !important;
+    }
+
+    .section-dua {
+        margin-right: 2rem
+    }
+
+    .kurir {
+        font-weight: normal;
+        color: #000;
+    }
+
+    .address {
+        font-weight: normal;
+        color: #000;
+        margin-top: 0.5rem;
+    }
+
+    .address-detail {
+        font-weight: normal;
+        color: #000;
+    }
+
+    .text-pengiriman {
+        margin-bottom: 0.5rem;
+        font-weight: 700 !important;
+    }
+
+    /* .text-bottom {
+        margin-bottom: 1rem;
+    } */

@@ -1,0 +1,271 @@
+<?= view('layouts/header'); ?>
+<?= view('layouts/wrapper'); ?>
+<?= view('layouts/navbar'); ?>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="<?= base_url('public/assets/css/member.css') ?>">
+
+<style>
+    /* styling css to fixedcolumns */
+    .tbody-member {
+        overflow: hidden !important;
+        height: 100% !important;
+        background-color: white;
+    }
+
+    .DTFC_LeftBodyLiner {
+        top: -12px !important;
+        overflow-y: hidden !important;
+    }
+</style>
+
+<!--  Content  -->
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Data Member</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="table-responsive">
+                            <table id="member" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 2%;z-index:1;background-color: white;">No</th>
+                                        <th style="width: 2%;z-index:1;background-color: white;">Nama Siswa</th>
+                                        <!-- <th scope="col">Tanggal Bulan Lahir</th> -->
+                                        <!-- <th scope="col">Jenis Kelamin</th> -->
+                                        <!-- <th scope="col">Sekolah</th> -->
+                                        <th scope="col">Telepon</th>
+                                        <!-- <th scope="col">Nama Orang Tua</th> -->
+                                        <!-- <th scope="col">Jurusan</th> -->
+                                        <th scope="col">Persetujuan</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody-member">
+                                    <?php $a = 0; ?>
+                                    <?php $i = 0; ?>
+                                    <?php $b = 0; ?>
+                                    <?php $c = 0; ?>
+                                    <?php $no = 1; ?>
+                                    <?php foreach ($member->data as $row) : ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= $row->name ?></td>
+                                            <!-- <td><?= date("d F Y", strtotime($row->birthDate)) ?></td> -->
+                                            <!-- <td><?= $row->gender ?></td> -->
+                                            <!-- <td><?= $row->originSchool ?></td> -->
+                                            <td><?= $row->phone ?></td>
+                                            <!-- <td><?= $row->parentName ?></td> -->
+                                            <!-- <td><?= $row->programSchool ?></td> -->
+                                            <td class="d-flex" style="gap: 1rem;">
+                                                <button type="button" id="unapproved" class="btn btn-danger">Tidak Disetujui</button>
+                                                <button type="button" id="approved" class="btn btn-success">Disetujui</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="modalreject" class="modal fade">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header flex-column">
+                                    <div class="icon-box">
+                                        <i class="material-icons">&#xE5CD;</i>
+                                    </div>
+                                    <h4 class="modal-title w-100">Apakah Anda Yakin?</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+
+                                    <button type="button" id="btnsave" class="btn btn-primary">ya</button>
+                                    <button type="button" id="btncancel" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Content  -->
+
+<?= view('layouts/footer'); ?>
+<?= view('layouts/script'); ?>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+<?= view('js/admin'); ?>
+
+<script>
+    // $("#validation").show();
+    function Delete(userId) {
+        $.ajax({
+            type: "GET",
+            url: `${baseUrl}/admin/member/delete/${userId}`,
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function(response) {
+                toastr.success('Hapus Member Berhasil');
+
+                setInterval(function() {
+                    location.reload();
+                }, 1000);
+            },
+            error: function(err) {
+                toastr.error('Hapus Member Gagal');
+            }
+        });
+    }
+
+
+    $(".switch").each(function(index) {
+
+
+        var role = $("#role" + index).val();
+        var status = $("#status" + index).val();
+
+        if (role == "member") {
+            $("#togBtn" + index).trigger("click");
+        }
+
+
+        $("#togBtn" + index).on('change', function() {
+            if ($(this).is(':checked')) {
+                switchStatus = $(this).is(':checked');
+
+                let data = new FormData();
+                var userId = $("#userId" + index).val();
+                alert(userId)
+
+                data.append('userId', userId);
+
+                if (role == "partnership") {
+                    $.ajax({
+                        type: "POST",
+                        url: `${baseUrl}/admin/member/partnership`,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function(response) {
+
+                            toastr.success('success');
+                            location.reload();
+                        },
+                        error: function(err) {
+                            toastr.error('something went wrong');
+                        }
+                    });
+                } else {
+
+                    $.ajax({
+                        type: "POST",
+                        url: `${baseUrl}/admin/member/approval`,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function(response) {
+
+                            toastr.success('success');
+                            location.reload();
+                        },
+                        error: function(err) {
+                            toastr.error('something went wrong');
+                        }
+                    });
+                }
+
+            } else {
+
+                if (role != "partnership") {
+                    $("#modalreject").modal('show');
+
+                    $("#btnsave").on('click', function() {
+                        switchStatus = $(this).is(':checked');
+
+                        let data = new FormData();
+                        var userId = $("#userId" + index).val();
+
+                        data.append('userId', userId);
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: `${baseUrl}/admin/member/rejected`,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            success: function(response) {
+                                toastr.success('success');
+                                location.reload();
+                            },
+                            error: function(err) {
+                                toastr.error('something went wrong');
+                            }
+                        });
+                    });
+                    $("#btncancel").on('click', function() {
+                        $.ajax({
+                            type: "POST",
+                            url: `${baseUrl}/admin/member/approval`,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            success: function(response) {
+
+                                toastr.success('success');
+                                location.reload();
+                            },
+                            error: function(err) {
+                                toastr.error('something went wrong');
+                            }
+                        });
+
+                    });
+                } else {
+                    let data = new FormData();
+                    var userId = $("#userId" + index).val();
+
+                    data.append('userId', userId);
+
+                    $.ajax({
+                        type: "POST",
+                        url: `${baseUrl}/admin/member/partnership`,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function(response) {
+
+                            toastr.success('success');
+                            location.reload();
+                        },
+                        error: function(err) {
+                            toastr.error('something went wrong');
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>

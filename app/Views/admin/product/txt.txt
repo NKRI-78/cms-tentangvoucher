@@ -1,0 +1,138 @@
+<?php
+                                    $items_per_page = 10;
+
+                                    // Nomor halaman saat ini (dari URL)
+                                    $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+                                    // Hitung nomor awal
+                                    $start_number = ($page_number - 1) * $items_per_page + 1;
+
+                                    // Inisialisasi nomor awal untuk loop
+                                    $no = $start_number;
+
+                                    if ($product != "") { ?>
+                                        <?php foreach ($product as $row) : ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $row->title ?></td>
+                                                <td><?= $row->stock ?></td>
+                                                <td><?= "Rp " . number_format($row->price, 0, ',', '.') ?></td>
+                                                <td>
+                                                    <div class="send-panel">
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a href="<?= base_url("admin/news/edit/$row->id") ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit News"> <i class="ri-edit-line text-primary"></i></a> </label>
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DetailNews('<?= $row->id ?>')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show Detail"> <i class="ri-list-check-2 text-primary"></i></a> </label>
+                                                        <label class="ml-2 mb-0 iq-bg-primary rounded"> <a onclick="DeleteProduct('<?= $row->id ?>')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Product"> <i class="ri-delete-bin-line text-primary"></i></a> </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php } ?>
+
+                                    <!-- <nav class="pt-3">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item <?= $pagination['previous'] ? '' : 'disabled' ?>">
+                                    <a class="page-link" href="<?= $pagination['previous'] ? base_url('admin/product?page=' . $pagination['previous']) : '#' ?>">Previous</a>
+                                </li>
+
+                                <?php
+                                $size = 5; // Number of page links to display
+                                $currentPage = $pagination['current'];
+                                $totalPages = $pagination['total'];
+
+                                $startPage = max(1, $currentPage - floor($size / 2));
+                                $endPage = min($totalPages, $startPage + $size - 1);
+
+                                if ($startPage > 1) {
+                                    echo '<li class="page-item"><a class="page-link" href="' . base_url('admin/product?page=1') . '">1</a></li>';
+                                    if ($startPage > 2) {
+                                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                    }
+                                }
+
+                                for ($i = $startPage; $i <= $endPage; $i++) {
+                                    echo '<li class="page-item ' . ($i == $currentPage ? 'active' : '') . '"><a class="page-link" href="' . base_url('admin/product?page=' . $i) . '">' . $i . '</a></li>';
+                                }
+
+                                if ($endPage < $totalPages) {
+                                    if ($endPage < $totalPages - 1) {
+                                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                    }
+                                    echo '<li class="page-item"><a class="page-link" href="' . base_url('admin/product?page=' . $totalPages) . '">' . $totalPages . '</a></li>';
+                                }
+                                ?>
+
+                                <li class="page-item <?= $pagination['next'] ? '' : 'disabled' ?>">
+                                    <a class="page-link" href="<?= $pagination['next'] ? base_url('admin/product?page=' . $pagination['next']) : '#' ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav> -->
+
+                        <?php foreach ($city as $row) : ?>
+                                                <option value="<?= htmlspecialchars($row->city_name) ?>" <?= ($row->city_name == htmlspecialchars($store['city'])) ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($row->city_name) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+
+                                            <!-- <div class="form-group col-md-6">
+                                        <label>City:</label>
+                                        <select class="form-control" id="city" name="category">
+                                            <option disabled selected>Select City</option>
+                                            <?php foreach ($city as $row) : ?>
+                                                <option value="<?= htmlspecialchars($row->city_name) ?>">
+                                                    <?= htmlspecialchars($row->city_name) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>District:</label>
+                                        <select class="form-control" id="district" name="district">
+                                            <option disabled selected>Select District</option>
+                                            <?php foreach ($district as $row) : ?>
+                                                <option value="<?= htmlspecialchars($row->district_name) ?>">
+                                                    <?= htmlspecialchars($row->district_name) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div> -->
+                                    <!-- <div class="form-group col-md-6">
+                                        <label>Subdistrict:</label>
+                                        <select class="form-control" id="subdistrict" name="subdistrict">
+                                            <option disabled selected>Select Subdistrict</option>
+                                            <?php foreach ($subdistrict as $row) : ?>
+                                                <option value="<?= htmlspecialchars($row->subdistrict_name) ?>">
+                                                    <?= htmlspecialchars($row->subdistrict_name) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div> -->
+
+                                    <!-- <input type="text" id="imageIds" value="<?= $product->medias[0]->path ?>" hidden> -->
+
+
+<!-- <td><?= $row->productItems[0]->quantity ?></td>
+                                                        <td><?= $row->productItems[0]->price ?></td>
+                                                        <td><?= $row->user->fullname ?></td>
+                                                        <td><?= $row->deliveryCost->courierName ?></td>
+                                                        <td>
+                                                            <?php switch ($row->orderStatus) {
+                                                                case "DONE":
+                                                                    echo "<div class='badge badge-pill badge-success'>Done</div>";
+                                                                    break;
+                                                                case "CANCELLED":
+                                                                    echo "<div class='badge badge-pill badge-danger'>Cancel</div>";
+                                                                    break;
+                                                                case "RECEIVED":
+                                                                    echo "<div class='badge badge-pill badge-primary'>Received</div>";
+                                                                    break;
+                                                                case "PACKING":
+                                                                    echo "<div class='badge badge-pill badge-warning'>Packing</div>";
+                                                                    break;
+                                                                case "SHIPPING":
+                                                                    echo "<div class='badge badge-pill badge-info'>Shipping</div>";
+                                                                    break;
+                                                                case "DELIVERED":
+                                                                    echo "<div class='badge badge-pill badge-secondary'>Delivered</div>";
+                                                                    break;
+                                                            }  ?>
+                                                        </td> -->

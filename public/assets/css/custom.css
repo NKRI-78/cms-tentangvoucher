@@ -1,0 +1,223 @@
+.sign-in-detail {
+    color: var(--iq-white);
+    /* background: #a59778; */
+    background: #3DA956;
+    background-image: url(public/assets/images/backgroundPepabri.png);
+}
+
+.sign-in-logo img {
+    height: auto !important;
+}
+
+.btn-custom {
+    background: #3DA956;
+    color: #f8f9fa;
+}
+
+.btn-custom:hover {
+    color: #f8f9fa;
+    background-color: #27793a;
+}
+
+.bg-custom {
+    color: var(--iq-white);
+    /* background: linear-gradient(to right, #ff0505 0%, #000000 100%) !important; */
+    background-color: #3DA956   ;
+}
+
+.wrapper-menu {
+    font-size: 30px;
+    line-height: 15px;
+    color: #3DA956;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 330ms ease-out;
+}
+
+a {
+    color: #27793a;
+}
+
+.iq-sidebar-menu .iq-menu li a {
+    font-size: 14px;
+    white-space: nowrap;
+    display: block;
+    color: #27793a;
+    position: relative;
+    padding: 15px 20px;
+    line-height: 18px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 0 15px 15px 0;
+}
+
+.iq-sidebar-menu .iq-menu li a[aria-expanded="true"] {
+    color: var(--iq-white);
+    text-decoration: none;
+    background-color: #3DA956;
+    /* background: linear-gradient(to right, #ff0505 0%, #000000 100%) !important; */
+    transition: none;
+    border-radius: 0 15px 0 0;
+}
+
+/* .iq-sidebar-menu .iq-menu li a:hover {
+    color: rgb(177, 174, 174);
+} */
+
+.iq-sidebar-menu .iq-menu li ul li a {
+    color: #27793a;
+}
+
+.iq-sidebar-logo img {
+    height: 68px;
+    margin-top: 3px;
+}
+
+.iq-sidebar-menu .iq-menu li.active>a {
+    color: var(--iq-white);
+    text-decoration: none;
+}
+
+.iq-sidebar-menu .iq-menu li.active .iq-submenu li.active>a {
+    /* background: var(--iq-light-primary); */
+    background-color:#27793a;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+.iq-sidebar-menu .iq-menu li.active>a {
+    color: var(--iq-white);
+    text-decoration: none;
+    background-color: #3DA956;
+    /* background: linear-gradient(to right, #ff0505 0%, #000000  100%); */
+    text-decoration: none;
+}
+
+/* untuk logo panjang */
+/* body.sidebar-main .iq-sidebar-logo img {
+    display: none;
+} */
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #27793a;
+    /* background-color: #EEB139; */
+    border-color: #3DA956;
+}
+
+.page-link {
+    border: 1px solid #27793a !important;
+}
+
+.form-control-sm {
+    line-height: 22px !important;
+}
+
+.form-control:focus {
+    color: black;
+    border-color: #27793a;
+    box-shadow: none;
+}
+
+th,
+td {
+    white-space: nowrap !important;
+}
+
+div.dataTables_wrapper {
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+.img-member{
+    width: 50px;
+}
+.download{
+    /* padding-top: 1px; */
+    padding-top: 1px;
+    margin-left: 356px;
+    margin-right: 18px;
+    margin-top: 8px;
+    background-color: #5959f7;
+    color: white;
+}
+.downloadfile{
+    margin-bottom: -5px;
+}
+
+.text-primary{
+    color: #427D9D !important;
+}
+
+.btn-primary{
+    background-color: #3DA956 !important;
+}
+
+.btn-primary:hover{
+    background-color: #27793a !important;
+}
+
+@media only screen and (max-width: 600px){
+    .download{
+        margin-left: 63%;
+    }
+}
+
+/* Atur warna latar belakang dan teks saat teks diseleksi */
+::selection {
+    background-color: #6EACDA !important; /* Warna latar belakang seleksi */
+    color: #fff !important;            /* Warna teks seleksi */
+}
+
+/* Untuk mendukung browser yang lebih lama, gunakan vendor prefixes */
+::-moz-selection { /* Firefox */
+    background-color: #6EACDA !important;
+    color: #fff !important;
+}
+
+::-webkit-selection { /* Chrome, Safari */
+    background-color: #6EACDA !important;
+    color: #fff !important;
+}
+
+.custom-btn-accordion:hover {
+    text-decoration: none !important;
+}
+
+/* styling dashboard */
+
+.textValue{
+    font-weight:700; 
+    color: #000 !important;
+    font-size: 1.5rem !important;
+}
+
+/* .custom-title {
+    margin-top: -0.5rem; 
+    font-weight:600; 
+    color: #fff;
+    margin-left: -4rem;
+} */
+
+.card-custom{
+    /* width: 18rem;  */
+    width: 21rem; 
+    margin-top: 0rem; 
+    margin-left: 1rem; 
+    height: 10rem; 
+    border-radius: 0.5rem; 
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.custome-card{
+    text-align: justify;
+}
