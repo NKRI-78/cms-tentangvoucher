@@ -97,8 +97,6 @@
                         $('#posCodeCreate').val(posCode);
                     });
 
-                    posCode()
-
                     // $('#subdistrict').off('change').on('change', function() {
                     //     var selectedSubdistrict = $(this).find(':selected');
                     //     var posCode = selectedSubdistrict.data('poscode');
@@ -113,51 +111,36 @@
         }
     });
 
-    // $('#subdistrict').change(function() {
-    //     // Ambil nama subdistrict yang dipilih atau id-nya (pastikan backend mendukung filter berdasar ini)
-    //     var selectedSubdistrictName = $(this).val();
-    //     var selectedSubdistrictId = $(this).find(':selected').data('subdistrict-id');
-    //     var districtName = $(this).val();
-    //     var cityName = $('#city').val();
+    $('#subdistrict').change(function() {
+        // var selectedSubdistrictName = $(this).val();
+        // var selectedSubdistrictId = $(this).find(':selected').data('subdistrict-id');
+        var districtName = $(this).val();
+        var cityName = $('#city').val();
 
-    //     $('#posCodeCreate').val('');
+        // $('#posCode').val('');
 
-    //     const subdistrict = districtName;
+        if (districtName) {
+            $.ajax({
+                url: `${baseUrl}/admin/officialStore/getSubdistrict`,
+                type: 'POST',
+                data: {
+                    district_name: districtName,
+                    city_name: cityName
+                },
+                success: function(response) {
+                    // console.log("Response from server:", response);
 
-    //     console.log("Subdistrict selected:", selectedSubdistrictName, "Subdistrict ID:", selectedSubdistrictId);
+                    var selectedSubdistrict = $('#subdistrict').find(':selected');
+                    var posCode = selectedSubdistrict.data('poscode');
 
-    //     $('#posCode').val('');
-
-    //     if (selectedSubdistrictId) {
-    //         $.ajax({
-    //             url: `${baseUrl}/admin/officialStore/getSubdistrict`,
-    //             type: 'POST',
-    //             data: {
-    //                 district_name: subdistrict,
-    //                 city_name: cityName
-    //             },
-    //             success: function(response) {
-    //                 console.log("Response from server:", response); // Debug: lihat respons dari server
-
-    //                 response.body.map(element => {
-    //                     $('#subdistrict').append('<option value="' + element.subdistricts_name + '" data-poscode="' + element.name + '">' + element.subdistricts_name + '</option>');
-    //                 });
-
-    //                 // $('#subdistrict').change(function() {
-    //                 //     var selectedSubdistrict = $(this).find(':selected');
-    //                 //     var posCode = selectedSubdistrict.data('poscode');
-
-    //                 //     console.log(posCode, selectedSubdistrict, 'cek code');
-    //                 //     $('#posCode').val(posCode);
-    //                 //     $('#posCodeCreate').val(posCode);
-    //                 // });
-    //             },
-    //             error: function(xhr, status, error) {
-    //                 console.error("Terjadi kesalahan saat mengambil kode pos: ", error);
-    //             }
-    //         });
-    //     }
-    // });
+                    $('#posCode').val(posCode);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Terjadi kesalahan saat mengambil kode pos: ", error);
+                }
+            });
+        }
+    });
 
     let selectedLatitude = parseFloat(document.getElementById("latitude").value) || -6.200000;
     let selectedLongitude = parseFloat(document.getElementById("longitude").value) || 106.816666;

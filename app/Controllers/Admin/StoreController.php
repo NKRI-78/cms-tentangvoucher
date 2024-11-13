@@ -263,19 +263,23 @@ class StoreController extends BaseController
             $data["store"] = $result->data;
         }
 
+        $getProvince = $result->data->address->province;
+        $getCity = $result->data->address->city;
+        $getDistrict = $result->data->address->district;
+
         $postData = [];
         $resultProvince = curlHelper(getenv('API_URL') . '/api/v1/administration/provinces', 'POST', $postData);
 
         $results = getenv('API_URL') . '/api/v1/administration/cities';
-        $getProvince = $result->data->address->province;
-        $body = [
+        
+        $bodyProvince = [
             "province_name" => $getProvince,
         ];
 
         $req = $client->post(
             $results,
             [
-                "body" => json_encode($body),
+                "body" => json_encode($bodyProvince),
                 'headers' =>  [
                     'Authorization' => 'Bearer ' . $session->get('token'),
                     'Content-Type'        => 'application/json',
@@ -286,15 +290,15 @@ class StoreController extends BaseController
         $responseBodyCity = json_decode($req->getBody()->getContents());
 
         $resultdistrict = getenv('API_URL') . '/api/v1/administration/districts';
-        $getCity = $result->data->address->city;
-        $body = [
+        
+        $bodyCity = [
             "city_name" => $getCity,
         ];
 
         $req = $client->post(
             $resultdistrict,
             [
-                "body" => json_encode($body),
+                "body" => json_encode($bodyCity),
                 'headers' =>  [
                     'Authorization' => 'Bearer ' . $session->get('token'),
                     'Content-Type'        => 'application/json',
@@ -304,12 +308,31 @@ class StoreController extends BaseController
 
         $responseBodyDistrict = json_decode($req->getBody()->getContents());
 
+        $resultPos = getenv('API_URL') . '/api/v1/administration/postal-codes';
+
+        $bodyPos = [
+            "district_name" => $getDistrict,
+            "city_name" => $getCity,
+        ];
+
+        $req = $client->post(
+            $resultPos,
+            [
+                "body" => json_encode($bodyPos),
+                'headers' =>  [
+                    'Authorization' => 'Bearer ' . $session->get('token'),
+                    'Content-Type'        => 'application/json',
+                ]
+            ]
+        );
+
+        $responseBodyPos = json_decode($req->getBody()->getContents());
 
         $data["province"] = $resultProvince->data;
         $data["city"] = $responseBodyCity->data;
         $data["district"] = $responseBodyDistrict->data;
-        // var_dump($data);
-        // die;
+        $data["subDistrict"] = $responseBodyPos->data;
+        // var_dump($data); die;
 
         return view("admin/officialStore/edit", $data);
     }

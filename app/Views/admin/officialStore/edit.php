@@ -81,7 +81,12 @@
                                     <div class="form-group col-md-6">
                                         <label>Kelurahan:</label>
                                         <select class="form-control" id="subdistrict" name="subdistrict">
-                                            <option disabled selected><?= htmlspecialchars($store->address->sub_district) ?></option>
+                                            <!-- <option disabled selected><?= htmlspecialchars($store->address->sub_district) ?></option> -->
+                                            <?php foreach ($subDistrict as $row) : ?>
+                                                <option value="<?= htmlspecialchars($row->subdistricts_name) ?>" data-poscode="<?= $row->name ?>" <?= ($row->subdistricts_name == htmlspecialchars($store->address->sub_district)) ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($row->subdistricts_name) ?>
+                                                </option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
