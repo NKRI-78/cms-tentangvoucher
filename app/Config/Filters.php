@@ -37,6 +37,7 @@ class Filters extends BaseConfig
 				'admin/officialStore/status/cancel',
 				// 'admin/studentGeneration/student/(:num)',
 				'admin/officialStore',
+				'admin/officialStore/edit',
 				'admin/product',
 				'admin/product/create',
 				'admin/product/edit/(:num)',
