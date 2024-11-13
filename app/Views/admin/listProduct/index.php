@@ -37,7 +37,7 @@
                 <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                         <div class="iq-header-title">
-                            <h4 class="card-title">Daftar Produk</h4>
+                            <h4 class="card-title">Daftar Produk Semua Toko</h4>
                         </div>
                         <a href="<?= base_url("/admin/product/create") ?>" class="btn mb-3 btn-primary" style="margin-top: 15px;"><i class="ri-add-circle-line"></i>Add</a>
                     </div>
