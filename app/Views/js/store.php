@@ -63,12 +63,12 @@
         var cityName = $('#city').val();
 
         $('#posCode').val('');
-        $('#posCodeCreate').val('');
 
         const subdistrict = districtName;
         // const encodedSubdistrict = encodeURIComponent(subdistrict);
 
         $('#subdistrict').html('<option disabled selected>Select SubDistrict</option>');
+        $('#posCode').val('');
 
         if (districtName) {
             $.ajax({
@@ -80,12 +80,10 @@
                 },
                 success: function(response) {
                     var districtResponse = response;
-                    // console.log(districtResponse, 'cek res');
+
                     $('#posCode').val('');
-                    $('#posCodeCreate').val('');
 
                     districtResponse.body.map(element => {
-                        console.log(element, 'element');
                         $('#subdistrict').append('<option value="' + element.subdistricts_name + '" data-poscode="' + element.name + '">' + element.subdistricts_name + '</option>');
                         // $('#posCode').val(element.name);
                     });
@@ -98,6 +96,15 @@
                         $('#posCode').val(posCode);
                         $('#posCodeCreate').val(posCode);
                     });
+
+                    posCode()
+
+                    // $('#subdistrict').off('change').on('change', function() {
+                    //     var selectedSubdistrict = $(this).find(':selected');
+                    //     var posCode = selectedSubdistrict.data('poscode');
+                    //     console.log(posCode, selectedSubdistrict, 'cek 1');
+                    //     $('#posCode').val(posCode);
+                    // });
                 },
                 error: function(xhr, status, error) {
                     console.error("Terjadi kesalahan saat mengambil data kota: ", error);
@@ -105,6 +112,52 @@
             });
         }
     });
+
+    // $('#subdistrict').change(function() {
+    //     // Ambil nama subdistrict yang dipilih atau id-nya (pastikan backend mendukung filter berdasar ini)
+    //     var selectedSubdistrictName = $(this).val();
+    //     var selectedSubdistrictId = $(this).find(':selected').data('subdistrict-id');
+    //     var districtName = $(this).val();
+    //     var cityName = $('#city').val();
+
+    //     $('#posCodeCreate').val('');
+
+    //     const subdistrict = districtName;
+
+    //     console.log("Subdistrict selected:", selectedSubdistrictName, "Subdistrict ID:", selectedSubdistrictId);
+
+    //     $('#posCode').val('');
+
+    //     if (selectedSubdistrictId) {
+    //         $.ajax({
+    //             url: `${baseUrl}/admin/officialStore/getSubdistrict`,
+    //             type: 'POST',
+    //             data: {
+    //                 district_name: subdistrict,
+    //                 city_name: cityName
+    //             },
+    //             success: function(response) {
+    //                 console.log("Response from server:", response); // Debug: lihat respons dari server
+
+    //                 response.body.map(element => {
+    //                     $('#subdistrict').append('<option value="' + element.subdistricts_name + '" data-poscode="' + element.name + '">' + element.subdistricts_name + '</option>');
+    //                 });
+
+    //                 // $('#subdistrict').change(function() {
+    //                 //     var selectedSubdistrict = $(this).find(':selected');
+    //                 //     var posCode = selectedSubdistrict.data('poscode');
+
+    //                 //     console.log(posCode, selectedSubdistrict, 'cek code');
+    //                 //     $('#posCode').val(posCode);
+    //                 //     $('#posCodeCreate').val(posCode);
+    //                 // });
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error("Terjadi kesalahan saat mengambil kode pos: ", error);
+    //             }
+    //         });
+    //     }
+    // });
 
     let selectedLatitude = parseFloat(document.getElementById("latitude").value) || -6.200000;
     let selectedLongitude = parseFloat(document.getElementById("longitude").value) || 106.816666;
@@ -211,6 +264,10 @@
             document.getElementById("longitude").value = selectedLongitude;
         });
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initMap();
+    });
 
     UpdateStore = async () => {
         let data = new FormData();
