@@ -18,12 +18,13 @@
                             <table id="data" class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">No</th>
+                                        <th scope="col" style="width: 4%;">No</th>
+                                        <th scope="col">Invoice</th>
                                         <th scope="col">Nama</th>
-                                        <th scope="col">Telepon</th>
-                                        <th scope="col">Jumlah</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col" style="width: 10%;">Telepon</th>
+                                        <th scope="col" style="width: 10%;">Jumlah</th>
+                                        <th scope="col" style="width: 10%;">Type</th>
+                                        <th scope="col" style="width: 10%;">Status</th>
                                         <th scope="col">Tanggal</th>
                                         <!-- <th scope="col">&emsp;&emsp;Action</th> -->
                                     </tr>
@@ -79,34 +80,55 @@
                 var res = JSON.parse(response);
                 var no = 1;
 
-                var dataRows = res.body.payments.map(element => {
-                    
+                let dataFilter = res.body.sort((a, b) => {
+                    return new Date(b.created_at) - new Date(a.created_at); // Mengurutkan descending berdasarkan created_at
+                });
+
+                var dataRows = dataFilter.map(element => {
+                    console.log(element, 'cek');
+
                     let statusText;
                     switch (element.status) {
-                        case 'PAID':
-                            statusText = "<div class='badge badge-pill badge-success'>PAID</div>";
+                        case null:
+                            statusText = "<div class='badge badge-pill btn-warning'>Pending</div>";
                             break;
-                        case 1:
-                            statusText = "Menunggu Setujui";
+                        case "ON_PROCESS":
+                            statusText = "<div class='badge button-confirm'>Packing</div>";
                             break;
-                        case 2:
-                            statusText = "Ditolak";
+                        case "DELIVERY":
+                            statusText = "<div class='badge badge-pill badge-info'>Delivery</div>";
                             break;
-                        case 3:
-                            statusText = "Sudah jadi siswa";
+                        case "DELIVERED":
+                            statusText = "<div class='badge badge-pill badge-secondary'>Delivered</div>";
                             break;
-                        default:
-                            statusText = "Status tidak diketahui"; // Untuk menangani status yang tidak terduga
+                        case "FINISHED":
+                            statusText = "<div class='badge badge-pill badge-success'>Done</div>";
+                            break;
+                        case "CANCEL":
+                            statusText = "<div class='badge badge-pill badge-danger'>Cancel</div>";
+                            break;
+                    }
+
+                    let type;
+                    switch (element.type) {
+                        case "ECOMMERCE_FISIK":
+                            type = "Fisik";
+                            break;
+                        case "ECOMMERCE_DIGITAL":
+                            type = "Digital";
+                            break;
                     }
 
                     const formatRupiah = (amount) => {
                         return amount ? new Intl.NumberFormat('id-ID', {
                             style: 'currency',
-                            currency: 'IDR'
+                            currency: 'IDR',
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
                         }).format(amount) : "-";
                     };
 
-                    let date = new Date(element.createdAt).toLocaleDateString('id-ID', {
+                    let date = new Date(element.created_at).toLocaleDateString('id-ID', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
@@ -116,12 +138,13 @@
 
                     return [
                         no++,
-                        element.User ? element.User.name : "-",
-                        element.User ? element.User.phone : "-",
-                        element.amount ? formatRupiah(element.amount) : "-",
-                        element.PaymentGetOneOrder.type ? element.PaymentGetOneOrder.type : "-",
+                        element.order_number ? element.order_number : "-",
+                        element.data.shipping_address ? element.data.shipping_address.name : element.data.email_buyer,
+                        element.data.shipping_address ? element.data.shipping_address.phone_number : "-",
+                        element.total_price ? formatRupiah(element.total_price) : "-",
+                        element.type ? type : "-",
                         element.status ? statusText : "-",
-                        element.createdAt ? date : "-",
+                        element.created_at ? date : "-",
                     ]
                 });
 

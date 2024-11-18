@@ -36,7 +36,7 @@ class DashboardController extends BaseController
     $result = curlHelper(getenv('API_URL') . '/api/v1/admin/dashboard', 'GET');
 
     return json_encode([
-      "body" => $result->data
+      "body" => $result->data->orders
     ]);
   }
 }

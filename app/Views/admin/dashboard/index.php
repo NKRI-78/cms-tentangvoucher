@@ -28,7 +28,7 @@
   <div class="container-fluid mb-5">
     <div class="row">
 
-      <a href="#" style="text-decoration: none; color: inherit;">
+      <a href="<?= base_url("/admin/dashboard/detailTransaction") ?>" style="text-decoration: none; color: inherit;">
         <div class="card card-custom" style="background-color: #fff; border: #496989 2px solid;">
           <div class="card-body" style="display: flex; justify-content: space-between; margin-top: 1rem;">
             <div class="custome-card">
